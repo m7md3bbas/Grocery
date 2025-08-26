@@ -4,6 +4,7 @@ import 'package:groceryapp/core/styles/app_text_style.dart';
 import 'package:groceryapp/core/validation/auth/auth_validation.dart';
 import 'package:groceryapp/core/widgets/textformfield/custom_textformfield.dart';
 import 'package:groceryapp/core/widgets/toast/flutter_toast.dart';
+import 'package:groceryapp/features/auth/viewmodel/auth_view_model.dart';
 import 'package:groceryapp/features/profile/viewmodel/profile_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -99,8 +100,17 @@ class _AboutMeScreenState extends State<AboutMeScreen> {
                             textInputType: TextInputType.phone,
                             hintText: "Phone",
                             prefixIcon: const Icon(Icons.phone),
-                            validator: (value) =>
-                                AuthValidation.validatePhone(value),
+                            validator: (value) {
+                              if (value!.isNotEmpty) {
+                                final phoneRegex = RegExp(r'^\d{11}$');
+                                if (!phoneRegex.hasMatch(value)) {
+                                  return 'Please enter a valid phone number';
+                                }
+
+                                return null;
+                              }
+                              return null;
+                            },
                           ),
                           const SizedBox(height: 24),
                           SizedBox(
@@ -109,38 +119,56 @@ class _AboutMeScreenState extends State<AboutMeScreen> {
                                 ? ElevatedButton(
                                     onPressed: () async {
                                       if (formKey.currentState!.validate()) {
+                                        final provider = context
+                                            .read<AuthViewModel>()
+                                            .getCurrentUser()!
+                                            .appMetadata["provider"];
                                         bool hasChanges = false;
 
                                         if (vm.user!.name !=
                                             _nameController.text) {
-                                          hasChanges = true;
-                                          final result = await vm.updateProfile(
-                                            userId: vm.user!.id,
-                                            name: _nameController.text,
-                                          );
-                                          if (!result) {
-                                            ShowToast.showError(vm.error);
-                                            return;
+                                          if (provider == "email") {
+                                            hasChanges = true;
+                                            final result = await vm
+                                                .updateProfile(
+                                                  userId: vm.user!.id,
+                                                  name: _nameController.text,
+                                                );
+                                            if (!result) {
+                                              ShowToast.showError(vm.error);
+                                              return;
+                                            } else {
+                                              ShowToast.showSuccess(
+                                                "name updated successfully",
+                                              );
+                                            }
                                           } else {
-                                            ShowToast.showSuccess(
-                                              "name updated successfully",
+                                            ShowToast.showError(
+                                              "You are using $provider login, you can't change your name",
                                             );
                                           }
                                         }
 
-                                        if (vm.user!.email !=
-                                            _emailController.text) {
-                                          hasChanges = true;
-                                          final result = await vm.updateEmail(
-                                            email: _emailController.text,
-                                          );
+                                        if (_emailController.text.isNotEmpty &&
+                                            vm.user!.email !=
+                                                _emailController.text) {
+                                          if (provider == "email") {
+                                            hasChanges = true;
+                                            final result = await vm.updateEmail(
+                                              email: _emailController.text,
+                                            );
 
-                                          if (!result) {
-                                            ShowToast.showError(vm.error);
-                                            return;
+                                            if (!result) {
+                                              ShowToast.showError(vm.error);
+                                              return;
+                                            } else {
+                                              ShowToast.showSuccess(
+                                                "Verification email sent successfully",
+                                              );
+                                            }
                                           } else {
-                                            ShowToast.showSuccess(
-                                              "Verification email sent successfully",
+                                            ShowToast.showError(
+                                              "You are using $provider login, you can't change your email",
                                             );
                                           }
                                         }

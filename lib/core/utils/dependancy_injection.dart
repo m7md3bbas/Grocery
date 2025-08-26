@@ -13,24 +13,24 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 final locator = GetIt.instance;
 void setupLocator() {
-  locator.registerLazySingleton<SupabaseClient>(() => Supabase.instance.client);
-  locator.registerLazySingleton<DioBaseClient>(() => DioBaseClient(dio: Dio()));
-  locator.registerLazySingleton<AuthService>(
+  locator.registerFactory<SupabaseClient>(() => Supabase.instance.client);
+  locator.registerFactory<DioBaseClient>(() => DioBaseClient(dio: Dio()));
+  locator.registerFactory<AuthService>(
     () => AuthServiceImp(supabaseClient: locator<SupabaseClient>()),
   );
-  locator.registerLazySingleton<ProfileService>(
+  locator.registerFactory<ProfileService>(
     () => ProfileService(
       dio: locator<DioBaseClient>(),
       supabaseClient: locator<SupabaseClient>(),
     ),
   );
-  locator.registerLazySingleton<ProfileRepo>(
+  locator.registerFactory<ProfileRepo>(
     () => ProfileRepo(profileService: locator<ProfileService>()),
   );
-  locator.registerLazySingleton<AuthRepo>(
+  locator.registerFactory<AuthRepo>(
     () => AuthRepo(authService: locator<AuthService>()),
   );
-  locator.registerLazySingleton<AuthViewModel>(
+  locator.registerFactory<AuthViewModel>(
     () => AuthViewModel(authRepo: locator<AuthRepo>()),
   );
   locator.registerLazySingleton<HomeViewModel>(() => HomeViewModel());

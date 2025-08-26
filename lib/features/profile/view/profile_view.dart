@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:groceryapp/core/routes/app_router.dart';
 import 'package:groceryapp/core/styles/app_color_styles.dart';
 import 'package:groceryapp/core/widgets/toast/flutter_toast.dart';
@@ -228,11 +229,20 @@ class _ProfileViewState extends State<ProfileView> {
                                     Icons.logout,
                                     "Sign out",
                                     () async {
-                                      await viewModel.logout().then((value) {
-                                        GoRouter.of(
-                                          context,
-                                        ).go(AppRouteName.initial);
-                                      });
+                                      final currentUser = context
+                                          .read<AuthViewModel>()
+                                          .getCurrentUser();
+
+                                      if (currentUser
+                                              ?.appMetadata['provider'] ==
+                                          'google') {
+                                        await GoogleSignIn().signOut();
+                                      }
+
+                                      await viewModel.logout();
+                                      GoRouter.of(
+                                        context,
+                                      ).go(AppRouteName.initial);
                                     },
                                   ),
                             ),
@@ -249,9 +259,13 @@ class _ProfileViewState extends State<ProfileView> {
 
   Widget _buildMenuItem(IconData icon, String title, VoidCallback onTap) {
     return ListTile(
-      leading: Icon(icon, color: Colors.green),
+      leading: Icon(icon, color: AppColors.primary),
       title: Text(title, style: const TextStyle(fontSize: 16)),
-      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+      trailing: Icon(
+        Icons.arrow_forward_ios,
+        size: 16,
+        color: AppColors.primary,
+      ),
       onTap: onTap,
     );
   }
