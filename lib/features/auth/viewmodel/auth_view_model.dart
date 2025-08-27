@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:groceryapp/core/error/failure.dart';
+import 'package:groceryapp/core/utils/error/failure.dart';
 import 'package:groceryapp/core/repos/auth/authrepo.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

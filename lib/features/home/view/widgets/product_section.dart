@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:groceryapp/core/styles/app_text_style.dart';
 import 'package:groceryapp/features/home/view/widgets/product_item.dart';
 import 'package:groceryapp/features/home/viewmodel/home_view_model.dart';
 import 'package:provider/provider.dart';
@@ -9,44 +8,80 @@ class ProductSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: () {},
-          child: ListTile(
-            leading: Text("Featured Products", style: AppStyles.textBold20),
-            trailing: const Icon(Icons.arrow_forward_ios),
-          ),
-        ),
-        Consumer<HomeViewModel>(
-          builder: (context, viewModel, _) => GridView.builder(
-            itemCount: viewModel.products.length,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
+    return Consumer<HomeViewModel>(
+      builder: (context, viewModel, _) {
+        final totalCount =
+            viewModel.products.length + (viewModel.hasMore ? 2 : 0);
+        return SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          sliver: SliverGrid.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
-              childAspectRatio: 0.62,
+              childAspectRatio: 0.58,
             ),
             itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () {},
-                child: ProductItem(
-                  product: viewModel.products[index],
+              if (index < viewModel.products.length) {
+                final product = viewModel.products[index];
+                return ProductItem(
+                  product: product,
                   onAddToCart: () {},
-                  onIncrease: () =>
-                      viewModel.increaseCount(viewModel.products[index]),
-                  onDecrease: () =>
-                      viewModel.decreaseCount(viewModel.products[index]),
-                  onToggleFavorite: () =>
-                      viewModel.toggleFavorite(viewModel.products[index]),
-                ),
-              );
+                  onIncrease: () => viewModel.increaseCount(product),
+                  onDecrease: () => viewModel.decreaseCount(product),
+                  onToggleFavorite: () {},
+                );
+              } else {
+                return const LoadingGridItem();
+              }
             },
+            itemCount: totalCount,
           ),
+        );
+      },
+    );
+  }
+}
+
+class LoadingGridItem extends StatefulWidget {
+  const LoadingGridItem({super.key});
+
+  @override
+  State<LoadingGridItem> createState() => _LoadingGridItemState();
+}
+
+class _LoadingGridItemState extends State<LoadingGridItem>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    )..repeat(reverse: true);
+    _animation = Tween<double>(begin: 0.3, end: 1.0).animate(_controller);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeTransition(
+      opacity: _animation,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.grey[300],
+          borderRadius: BorderRadius.circular(12),
         ),
-      ],
+        margin: const EdgeInsets.all(4),
+      ),
     );
   }
 }

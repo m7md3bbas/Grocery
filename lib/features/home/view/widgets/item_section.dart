@@ -9,12 +9,12 @@ class ItemSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CircleAvatar(
-          backgroundColor: categoryModel.color,
-          radius: 30,
-          child: SvgPicture.asset(categoryModel.image),
-        ),
-        Text(categoryModel.name),
+        // CircleAvatar(
+        //   backgroundColor: categoryModel.color,
+        //   radius: 30,
+        //   child: SvgPicture.asset(categoryModel.image),
+        // ),
+        // Text(categoryModel.name),
       ],
     );
   }

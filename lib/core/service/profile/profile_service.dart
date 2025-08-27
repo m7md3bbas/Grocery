@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:groceryapp/core/service/dio/base_class.dart';
-import 'package:groceryapp/core/error/failure.dart';
+import 'package:groceryapp/core/utils/error/failure.dart';
 import 'package:groceryapp/features/profile/model/user_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -15,7 +15,7 @@ class ProfileService {
     try {
       final response = await dio.get(
         url: 'users_profile',
-        data: {'id': 'eq.$userId', 'select': '*'},
+        queryParameters: {'id': 'eq.$userId', 'select': '*'},
       );
 
       if (response.data != null &&

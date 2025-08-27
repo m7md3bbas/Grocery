@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:groceryapp/core/styles/app_text_style.dart';
+import 'package:groceryapp/core/utils/constants/styles/app_text_style.dart';
 
 class CartView extends StatelessWidget {
   const CartView({super.key});

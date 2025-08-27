@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:groceryapp/core/styles/app_color_styles.dart';
+import 'package:groceryapp/core/utils/constants/styles/app_color_styles.dart';
 import 'package:groceryapp/features/cart/view/cart_view.dart';
 import 'package:groceryapp/features/favorite/view/favorite_view.dart';
 import 'package:groceryapp/features/home/view/home_view_body.dart';

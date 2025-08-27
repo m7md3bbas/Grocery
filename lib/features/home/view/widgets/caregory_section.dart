@@ -1,6 +1,8 @@
+import 'dart:ffi';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:groceryapp/core/styles/app_text_style.dart';
-import 'package:groceryapp/features/home/view/widgets/item_section.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:groceryapp/features/home/viewmodel/home_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -9,29 +11,35 @@ class CaregorySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        ListTile(
-          leading: Text("Categories", style: AppStyles.textBold20),
-          trailing: const Icon(Icons.arrow_forward_ios),
-        ),
-        SizedBox(
-          height: 80,
-          child: Consumer<HomeViewModel>(
-            builder: (context, viewModel, _) => ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: viewModel.categoryImages.length,
-              itemBuilder: (context, index) => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: ItemSection(
-                  categoryModel: viewModel.categoryImages[index],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
+    return SizedBox(
+      height: 120,
+      child: Consumer<HomeViewModel>(
+        builder: (context, viewModel, _) {
+          return ListView.builder(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            itemCount: viewModel.categories.length,
+            itemBuilder: (context, index) {
+              final category = viewModel.categories[index];
+              final color = (int.parse(category.color));
+              return Column(
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Color(color),
+                    radius: 50,
+                    child: SvgPicture.network(
+                      category.image!,
+                      height: 50,
+                      width: 40,
+                    ),
+                  ),
+                  Text(category.title, style: const TextStyle(fontSize: 12)),
+                ],
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

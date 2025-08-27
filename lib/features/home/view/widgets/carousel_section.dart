@@ -1,8 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:groceryapp/core/constants/images.dart';
-import 'package:groceryapp/core/styles/app_color_styles.dart';
-import 'package:groceryapp/core/styles/app_text_style.dart';
+import 'package:groceryapp/core/utils/constants/images.dart';
+import 'package:groceryapp/core/utils/constants/styles/app_color_styles.dart';
+import 'package:groceryapp/core/utils/constants/styles/app_text_style.dart';
 import 'package:groceryapp/features/home/viewmodel/home_view_model.dart';
 import 'package:provider/provider.dart';
 

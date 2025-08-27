@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:groceryapp/core/styles/app_text_style.dart';
+import 'package:groceryapp/core/utils/constants/styles/app_text_style.dart';
 import 'package:groceryapp/features/onboarding/model/onboarding_model.dart';
 
 class OnboardingViewBody extends StatelessWidget {

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:groceryapp/core/routes/app_router.dart';
-import 'package:groceryapp/core/styles/app_color_styles.dart';
+import 'package:groceryapp/core/utils/constants/styles/app_color_styles.dart';
 import 'package:groceryapp/core/widgets/toast/flutter_toast.dart';
 import 'package:groceryapp/features/auth/viewmodel/auth_view_model.dart';
 import 'package:groceryapp/features/profile/viewmodel/profile_view_model.dart';

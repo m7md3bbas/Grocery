@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:groceryapp/core/constants/images.dart';
-import 'package:groceryapp/core/styles/app_color_styles.dart';
+import 'package:groceryapp/core/utils/constants/images.dart';
+import 'package:groceryapp/core/utils/constants/styles/app_color_styles.dart';
 import 'package:groceryapp/features/auth/view/widget/welcome_section.dart';
 
 class AuthWelcome extends StatelessWidget {

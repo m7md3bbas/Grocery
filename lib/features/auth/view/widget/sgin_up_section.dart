@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:groceryapp/core/routes/app_router.dart';
-import 'package:groceryapp/core/styles/app_color_styles.dart';
-import 'package:groceryapp/core/styles/app_text_style.dart';
-import 'package:groceryapp/core/validation/auth/auth_validation.dart';
+import 'package:groceryapp/core/utils/constants/styles/app_color_styles.dart';
+import 'package:groceryapp/core/utils/constants/styles/app_text_style.dart';
+import 'package:groceryapp/core/utils/validation/auth/auth_validation.dart';
 import 'package:groceryapp/core/widgets/textformfield/custom_textformfield.dart';
 import 'package:go_router/go_router.dart';
 import 'package:groceryapp/core/widgets/toast/flutter_toast.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:groceryapp/core/styles/app_color_styles.dart';
-import 'package:groceryapp/core/styles/app_text_style.dart';
+import 'package:groceryapp/core/utils/constants/styles/app_color_styles.dart';
+import 'package:groceryapp/core/utils/constants/styles/app_text_style.dart';
 import 'package:groceryapp/features/home/model/product_model.dart';
 
 class ProductItem extends StatelessWidget {
@@ -45,7 +45,7 @@ class ProductItem extends StatelessWidget {
               _wishListItem(),
             ],
           ),
-          Image.asset(product.image, height: 90),
+          Image.network(product.image ?? "", height: 90),
           const SizedBox(height: 8),
           Text(
             "\$${product.price.toStringAsFixed(2)}",
@@ -117,10 +117,7 @@ class ProductItem extends StatelessWidget {
           shape: BoxShape.circle,
           color: Colors.white.withOpacity(0.7),
         ),
-        child: Icon(
-          product.isFavorite ? Icons.favorite : Icons.favorite_border,
-          color: AppColors.primary,
-        ),
+        child: Icon(Icons.favorite_border, color: AppColors.primary),
       ),
     );
   }

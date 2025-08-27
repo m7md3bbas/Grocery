@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:groceryapp/core/routes/app_router.dart';
-import 'package:groceryapp/core/styles/app_color_styles.dart';
-import 'package:groceryapp/core/styles/app_text_style.dart';
+import 'package:groceryapp/core/utils/constants/styles/app_color_styles.dart';
+import 'package:groceryapp/core/utils/constants/styles/app_text_style.dart';
 import 'package:groceryapp/features/onboarding/viewModel/onboarding_view_model_model.dart';
 import 'package:groceryapp/features/onboarding/views/onboarding_first_view.dart';
 import 'package:go_router/go_router.dart';

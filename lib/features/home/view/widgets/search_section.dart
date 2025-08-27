@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:groceryapp/core/styles/app_color_styles.dart';
+import 'package:groceryapp/core/utils/constants/styles/app_color_styles.dart';
 import 'package:groceryapp/core/widgets/textformfield/custom_textformfield.dart';
 
 class SearchSection extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:groceryapp/core/constants/images.dart';
-import 'package:groceryapp/core/styles/app_color_styles.dart';
+import 'package:groceryapp/core/utils/constants/images.dart';
+import 'package:groceryapp/core/utils/constants/styles/app_color_styles.dart';
 import 'package:groceryapp/core/widgets/dismissKeyboard.dart';
 import 'package:groceryapp/features/auth/view/widget/sgin_up_section.dart';
 

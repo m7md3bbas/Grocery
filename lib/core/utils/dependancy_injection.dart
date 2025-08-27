@@ -1,9 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:groceryapp/core/repos/auth/authrepo.dart';
+import 'package:groceryapp/core/repos/category/category_repo.dart';
+import 'package:groceryapp/core/repos/product/product_repos.dart';
 import 'package:groceryapp/core/repos/profile/profile_repo.dart';
 import 'package:groceryapp/core/service/auth/auth_service.dart';
+import 'package:groceryapp/core/service/category/category_service.dart';
 import 'package:groceryapp/core/service/dio/base_class.dart';
+import 'package:groceryapp/core/service/product/product_service.dart';
 import 'package:groceryapp/core/service/profile/profile_service.dart';
 import 'package:groceryapp/features/auth/viewmodel/auth_view_model.dart';
 import 'package:groceryapp/features/home/viewmodel/home_view_model.dart';
@@ -24,8 +28,14 @@ void setupLocator() {
       supabaseClient: locator<SupabaseClient>(),
     ),
   );
+  locator.registerFactory<ProductService>(
+    () => ProductService(dio: locator<DioBaseClient>()),
+  );
   locator.registerFactory<ProfileRepo>(
     () => ProfileRepo(profileService: locator<ProfileService>()),
+  );
+  locator.registerFactory<ProductRepos>(
+    () => ProductRepos(productService: locator<ProductService>()),
   );
   locator.registerFactory<AuthRepo>(
     () => AuthRepo(authService: locator<AuthService>()),
@@ -33,11 +43,20 @@ void setupLocator() {
   locator.registerFactory<AuthViewModel>(
     () => AuthViewModel(authRepo: locator<AuthRepo>()),
   );
-  locator.registerLazySingleton<HomeViewModel>(() => HomeViewModel());
-  locator.registerLazySingleton<OnboardingViewModel>(
-    () => OnboardingViewModel(),
+  locator.registerFactory<CategoryService>(
+    () => CategoryService(dio: locator<DioBaseClient>()),
   );
-  locator.registerLazySingleton<ProfileViewModel>(
+  locator.registerFactory<CategoryRepo>(
+    () => CategoryRepo(categoryService: locator<CategoryService>()),
+  );
+  locator.registerFactory<HomeViewModel>(
+    () => HomeViewModel(
+      productRepos: locator<ProductRepos>(),
+      categoryRepos: locator<CategoryRepo>(),
+    ),
+  );
+  locator.registerFactory<OnboardingViewModel>(() => OnboardingViewModel());
+  locator.registerFactory<ProfileViewModel>(
     () => ProfileViewModel(profileRepo: locator<ProfileRepo>()),
   );
 }

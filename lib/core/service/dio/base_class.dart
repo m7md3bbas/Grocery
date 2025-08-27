@@ -28,8 +28,9 @@ class DioBaseClient {
 
   Future<Response> get({
     required String url,
-    required Map<String, dynamic> data,
-  }) async => await dio.get(url, queryParameters: data);
+    required Map<String, dynamic> queryParameters,
+    Options? options,
+  }) async => await dio.get(url, queryParameters: queryParameters);
   Future<Response> post({required String url, data}) async =>
       await dio.post(url, data: data);
   Future<Response> put({required String url, data}) async =>

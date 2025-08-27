@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:groceryapp/core/constants/images.dart';
+import 'package:groceryapp/core/utils/constants/images.dart';
 import 'package:groceryapp/features/onboarding/model/onboarding_model.dart';
 
 class OnboardingViewModel extends ChangeNotifier {

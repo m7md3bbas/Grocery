@@ -2,7 +2,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:groceryapp/core/utils/sharedpreference.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../error/failure.dart';
+import '../../utils/error/failure.dart';
 
 abstract class AuthService {
   Future<void> login({required String email, required String password});
@@ -29,15 +29,10 @@ class AuthServiceImp implements AuthService {
   @override
   Future<void> login({required String email, required String password}) async {
     try {
-      final response = await supabaseClient.auth.signInWithPassword(
+      await supabaseClient.auth.signInWithPassword(
         email: email,
         password: password,
       );
-      final session = supabaseClient.auth.currentSession;
-      await SharedpreferenceHelper().setString("token", session!.accessToken);
-      if (response.user == null) {
-        throw Failure("Invalid email or password");
-      }
     } on AuthException catch (e) {
       throw Failure(e.message);
     } catch (_) {
@@ -105,11 +100,18 @@ class AuthServiceImp implements AuthService {
     }
 
     try {
-      await supabaseClient.auth.signInWithIdToken(
-        provider: OAuthProvider.google,
-        idToken: idToken,
-        accessToken: accessToken,
-      );
+      await supabaseClient.auth
+          .signInWithIdToken(
+            provider: OAuthProvider.google,
+            idToken: idToken,
+            accessToken: accessToken,
+          )
+          .then((_) async {
+            await supabaseClient
+                .from('users_profile')
+                .update({'profile_url': googleUser!.photoUrl})
+                .eq('id', supabaseClient.auth.currentUser!.id);
+          });
     } on AuthException catch (e) {
       throw Failure(e.message);
     }

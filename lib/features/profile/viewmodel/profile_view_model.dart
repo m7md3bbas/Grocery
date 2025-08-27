@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:groceryapp/core/error/failure.dart';
+import 'package:groceryapp/core/utils/error/failure.dart';
 import 'package:groceryapp/core/repos/profile/profile_repo.dart';
 import 'package:groceryapp/core/service/auth/auth_service.dart';
 import 'package:groceryapp/core/utils/dependancy_injection.dart';
