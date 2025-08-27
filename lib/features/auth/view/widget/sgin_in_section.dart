@@ -34,23 +34,36 @@ class _SginInSectionState extends State<SginInSection> {
           key: formKey,
           child: Column(
             spacing: 10,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text("Welcome back !", style: AppStyles.textBold25),
-              Text("Sign in to your account", style: AppStyles.textMedium12),
+              Text(
+                "Welcome back !",
+                style: AppStyles.textBold25.copyWith(
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+              Text(
+                "Sign in to your account",
+                style: AppStyles.textMedium15.copyWith(
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
               const SizedBox(height: 10),
               CustomTextFormField(
                 validator: (value) => AuthValidation.validateEmail(value),
                 textInputType: TextInputType.emailAddress,
                 controller: email,
                 hintText: "Email",
-                prefixIcon: Icon(Icons.email_outlined),
+                prefixIcon: Icon(
+                  Icons.email_outlined,
+                  color: AppColors.primary,
+                ),
               ),
 
               CustomTextFormField(
                 validator: (value) => AuthValidation.validatePassword(value),
                 textInputType: TextInputType.visiblePassword,
-                prefixIcon: Icon(Icons.lock),
+                prefixIcon: Icon(Icons.lock, color: AppColors.primary),
                 controller: password,
                 hintText: "Password",
                 isObsecure: viewModel.isHidden,
@@ -60,10 +73,19 @@ class _SginInSectionState extends State<SginInSection> {
                     viewModel.isHidden
                         ? Icons.visibility_off_outlined
                         : Icons.visibility,
+                    color: AppColors.primary,
                   ),
                 ),
               ),
-              CustomRememberMe(),
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  "Forgot Password?",
+                  style: AppStyles.textMedium15.copyWith(
+                    color: AppColors.primary,
+                  ),
+                ),
+              ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size.fromHeight(50),

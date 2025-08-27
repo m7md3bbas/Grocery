@@ -33,29 +33,42 @@ class _SginUpSectionState extends State<SginUpSection> {
           key: formKey,
           child: Column(
             spacing: 10,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text("Create account", style: AppStyles.textBold25),
-              Text("Quickly create account", style: AppStyles.textMedium12),
+              Text(
+                "Create your account",
+                style: AppStyles.textBold25.copyWith(
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+              Text(
+                "Easy and Fast",
+                style: AppStyles.textMedium15.copyWith(
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
               const SizedBox(height: 10),
               CustomTextFormField(
                 textInputType: TextInputType.emailAddress,
                 controller: email,
                 hintText: "Email",
                 validator: (value) => AuthValidation.validateEmail(value),
-                prefixIcon: Icon(Icons.email_outlined),
+                prefixIcon: Icon(
+                  Icons.email_outlined,
+                  color: AppColors.primary,
+                ),
               ),
               CustomTextFormField(
                 validator: (value) => AuthValidation.validatePhone(value),
                 textInputType: TextInputType.phone,
                 controller: phone,
                 hintText: "phone",
-                prefixIcon: Icon(Icons.phone),
+                prefixIcon: Icon(Icons.phone, color: AppColors.primary),
               ),
               CustomTextFormField(
                 validator: (value) => AuthValidation.validatePassword(value),
                 textInputType: TextInputType.visiblePassword,
-                prefixIcon: Icon(Icons.lock),
+                prefixIcon: Icon(Icons.lock, color: AppColors.primary),
                 controller: password,
                 hintText: "Password",
                 isObsecure: viewModel.isHidden,
@@ -64,6 +77,7 @@ class _SginUpSectionState extends State<SginUpSection> {
                   icon: viewModel.isHidden
                       ? Icon(Icons.visibility_off_outlined)
                       : Icon(Icons.visibility),
+                  color: AppColors.primary,
                 ),
               ),
 

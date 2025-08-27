@@ -18,9 +18,12 @@ class WelcomeSection extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Column(
         spacing: 10,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text("Welcome", style: AppStyles.textBold25),
+          Text(
+            "Welcome",
+            style: AppStyles.textBold25.copyWith(fontStyle: FontStyle.italic),
+          ),
           Text(
             "Please sign in to continue using our service",
             style: AppStyles.textMedium12,
@@ -34,15 +37,15 @@ class WelcomeSection extends StatelessWidget {
                   .loginWithGoogle();
               if (result) {
                 GoRouter.of(context).push(AppRouteName.home);
-              } else {
-                ShowToast.showError(context.read<AuthViewModel>().error);
               }
             },
+            iconColor: AppColors.primary,
             title: "Continue with Google",
             icon: FontAwesomeIcons.google,
             color: AppColors.background,
           ),
           CustomCardAuth(
+            iconColor: AppColors.background,
             onTap: () => GoRouter.of(context).push(AppRouteName.signUp),
             title: "Create an account",
             icon: FontAwesomeIcons.user,

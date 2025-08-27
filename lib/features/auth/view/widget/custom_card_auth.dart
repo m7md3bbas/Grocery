@@ -8,12 +8,14 @@ class CustomCardAuth extends StatelessWidget {
     required this.icon,
     required this.color,
     required this.onTap,
+    required this.iconColor,
   });
 
   final String title;
   final IconData icon;
   final Color color;
   final VoidCallback onTap;
+  final Color iconColor;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -27,7 +29,7 @@ class CustomCardAuth extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Icon(icon),
+            Icon(icon, color: iconColor),
             Text(title, style: AppStyles.textMedium15),
           ],
         ),
