@@ -60,12 +60,18 @@ class ProductSection extends StatelessWidget {
                     final cartVm = context.read<CartViewModel>();
                     final currentQuantity = cartVm.getQuantity(product);
 
-                    cartVm.updateQuantity(
-                      productId: product.id,
-                      userId: userId,
-                      cartId: cartVm.getCartId(product), // لازم الكارت نفسه
-                      quantity: currentQuantity + 1,
-                    );
+                    if (currentQuantity < product.quantity) {
+                      cartVm.updateQuantity(
+                        productId: product.id,
+                        userId: userId,
+                        cartId: cartVm.getCartId(product),
+                        quantity: currentQuantity + 1,
+                      );
+                    } else {
+                      ShowToast.showError(
+                        "We have only ${product.quantity} of this product",
+                      );
+                    }
                   },
                   onDecrease: () {
                     final userId = context
@@ -79,17 +85,24 @@ class ProductSection extends StatelessWidget {
                       cartVm.updateQuantity(
                         productId: product.id,
                         userId: userId,
-                        cartId: cartVm.getCartId(product), // لازم الكارت نفسه
+                        cartId: cartVm.getCartId(product),
                         quantity: currentQuantity - 1,
                       );
-                    } else {
-                      cartVm.removeFromCart(
-                        userId,
-                        cartVm.getCartId(product),
-                        product.id,
-                      );
+                    } else if (currentQuantity == 1) {
+                      cartVm
+                          .removeFromCart(
+                            userId,
+                            cartVm.getCartId(product),
+                            product.id,
+                          )
+                          .then((_) {
+                            ShowToast.showError(
+                              "${product.title} removed from cart",
+                            );
+                          });
                     }
                   },
+
                   onToggleFavorite: () {},
                 );
               } else {

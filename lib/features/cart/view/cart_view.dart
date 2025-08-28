@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:groceryapp/core/utils/constants/styles/app_color_styles.dart';
+import 'package:groceryapp/core/widgets/toast/flutter_toast.dart';
 import 'package:groceryapp/features/auth/viewmodel/auth_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:groceryapp/features/cart/viewmodel/cart_view_model.dart';
@@ -82,12 +83,16 @@ class CartView extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
-              onPressed: () => cartVM.updateQuantity(
-                productId: item.productId,
-                userId: item.userId,
-                cartId: item.id,
-                quantity: item.quantity - 1,
-              ),
+              onPressed: () {
+                if (item.quantity > 1) {
+                  cartVM.updateQuantity(
+                    productId: item.productId,
+                    userId: item.userId,
+                    cartId: item.id,
+                    quantity: item.quantity - 1,
+                  );
+                }
+              },
               icon: const Icon(Icons.remove),
             ),
             cartVM.isItemLoading(item.productId)
@@ -108,12 +113,20 @@ class CartView extends StatelessWidget {
                     ),
                   ),
             IconButton(
-              onPressed: () => cartVM.updateQuantity(
-                productId: item.productId,
-                userId: item.userId,
-                cartId: item.id,
-                quantity: item.quantity + 1,
-              ),
+              onPressed: () {
+                if (item.quantity < item.product!.quantity) {
+                  cartVM.updateQuantity(
+                    productId: item.productId,
+                    userId: item.userId,
+                    cartId: item.id,
+                    quantity: item.quantity + 1,
+                  );
+                } else {
+                  ShowToast.showError(
+                    "we have only ${item.product!.quantity} of this product",
+                  );
+                }
+              },
               icon: const Icon(Icons.add, color: Colors.green),
             ),
           ],

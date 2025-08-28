@@ -121,6 +121,7 @@ class CartViewModel extends ChangeNotifier {
     _setItemLoading(productId, true);
     try {
       await _cartRepo.removeFromCart(userId, cartId);
+      _cartItems.removeWhere((item) => item.id == cartId);
     } catch (e) {
       _error = e.toString();
     } finally {
