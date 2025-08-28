@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:groceryapp/features/home/model/category_model.dart';
 
 class ItemSection extends StatelessWidget {

@@ -9,8 +9,8 @@ class HomeViewModel extends ChangeNotifier {
   final ProductRepos productRepos;
   final CategoryRepo categoryRepos;
   HomeViewModel({required this.productRepos, required this.categoryRepos}) {
-    getCategories();
     getProduct();
+    getCategories();
   }
   bool _isLoading = false;
   String _error = '';
@@ -19,7 +19,7 @@ class HomeViewModel extends ChangeNotifier {
   bool _hasMore = true;
   List<ProductModel> _products = [];
   final List<CategoryModel> _categories = [];
-  List<CategoryModel> get categories => _categories; // List<CategoryModel>
+  List<CategoryModel> get categories => _categories;
 
   bool get hasMore => _hasMore;
   int get page => _page;
@@ -70,7 +70,6 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      await Future.delayed(const Duration(seconds: 1));
       final nextPage = loadMore ? _page + 1 : 1;
       final data = await productRepos.getProduct(
         page: nextPage,
@@ -79,7 +78,6 @@ class HomeViewModel extends ChangeNotifier {
 
       if (loadMore) {
         _isLoading = true;
-        await Future.delayed(const Duration(seconds: 1));
         _products.addAll(data);
       } else {
         _products = data;
@@ -114,12 +112,4 @@ class HomeViewModel extends ChangeNotifier {
       notifyListeners();
     }
   }
-
-  // void toggleFavorite(ProductModel product) {
-  //   final index = _products.indexWhere((p) => p.id == product.id);
-  //   if (index != -1) {
-  //     _products[index] = product.copyWith(isFavorite: !product.isFavorite);
-  //     notifyListeners();
-  //   }
-  // }
 }

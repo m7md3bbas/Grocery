@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:groceryapp/core/routes/app_router.dart';
 import 'package:groceryapp/core/utils/dependancy_injection.dart';
 import 'package:groceryapp/features/auth/viewmodel/auth_view_model.dart';
+import 'package:groceryapp/features/cart/viewmodel/cart_view_model.dart';
 import 'package:groceryapp/features/home/viewmodel/home_view_model.dart';
 import 'package:groceryapp/features/onboarding/viewModel/onboarding_view_model_model.dart';
 import 'package:groceryapp/features/profile/viewmodel/profile_view_model.dart';
@@ -21,6 +22,7 @@ class GroceryApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => locator<ProfileViewModel>(),
         ),
+        ChangeNotifierProvider(create: (context) => locator<CartViewModel>()),
       ],
       child: MaterialApp.router(
         routerConfig: AppRouter.router,

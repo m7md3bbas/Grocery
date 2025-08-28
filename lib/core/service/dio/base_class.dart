@@ -35,7 +35,10 @@ class DioBaseClient {
       await dio.post(url, data: data);
   Future<Response> put({required String url, data}) async =>
       await dio.put(url, data: data);
-  Future<Response> delete({required String url}) async => await dio.delete(url);
+  Future<Response> delete({
+    required String url,
+    required Map<String, dynamic> queryParameters,
+  }) async => await dio.delete(url, queryParameters: queryParameters);
   Future<Response> patch({
     required String url,
     dynamic data,

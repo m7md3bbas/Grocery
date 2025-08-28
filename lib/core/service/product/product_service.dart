@@ -34,7 +34,6 @@ class ProductService {
 
       return data;
     } catch (e) {
-      print(e);
       throw Failure(e.toString());
     }
   }

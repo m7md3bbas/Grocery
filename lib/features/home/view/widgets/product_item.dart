@@ -1,7 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:groceryapp/core/utils/constants/styles/app_color_styles.dart';
 import 'package:groceryapp/core/utils/constants/styles/app_text_style.dart';
+import 'package:groceryapp/features/cart/viewmodel/cart_view_model.dart';
 import 'package:groceryapp/features/home/model/product_model.dart';
+import 'package:provider/provider.dart';
 
 class ProductItem extends StatelessWidget {
   final ProductModel product;
@@ -45,53 +48,70 @@ class ProductItem extends StatelessWidget {
               _wishListItem(),
             ],
           ),
-          Image.network(product.image ?? "", height: 90),
+          CachedNetworkImage(imageUrl: product.image!, height: 90),
           const SizedBox(height: 8),
           Text(
             "\$${product.price.toStringAsFixed(2)}",
-            style: AppStyles.textBold20.copyWith(color: AppColors.primary),
+            style: AppStyles.textBold15.copyWith(color: AppColors.primary),
           ),
           Text(
             product.title,
-            style: AppStyles.textBold15.copyWith(color: Colors.black),
+            style: AppStyles.textBold15.copyWith(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           Text(
             product.weight.toString(),
             style: AppStyles.textMedium12.copyWith(color: Colors.grey),
           ),
           const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _circleButton(Icons.remove, onDecrease),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  "${product.quantity}",
-                  style: AppStyles.textBold20.copyWith(
-                    color: AppColors.primary,
+
+          context.watch<CartViewModel>().isInCart(product)
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _circleButton(Icons.remove, onDecrease),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child:
+                          context.watch<CartViewModel>().isItemLoading(
+                            product.id,
+                          )
+                          ? SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: const CircularProgressIndicator(
+                                color: AppColors.primary,
+                                strokeWidth: 2,
+                              ),
+                            )
+                          : Text(
+                              "${context.watch<CartViewModel>().getQuantity(product)}",
+                              style: AppStyles.textBold20.copyWith(
+                                color: AppColors.primary,
+                              ),
+                            ),
+                    ),
+                    _circleButton(Icons.add, onIncrease),
+                  ],
+                )
+              : TextButton(
+                  onPressed: onAddToCart,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.shopping_cart, color: AppColors.primary),
+                      const SizedBox(width: 6),
+                      Text(
+                        "Add to cart",
+                        style: AppStyles.textMedium15.copyWith(
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              _circleButton(Icons.add, onIncrease),
-            ],
-          ),
-          TextButton(
-            onPressed: onAddToCart,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.shopping_cart, color: AppColors.primary),
-                const SizedBox(width: 6),
-                Text(
-                  "Add to cart",
-                  style: AppStyles.textMedium15.copyWith(
-                    color: AppColors.primary,
-                  ),
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     );
