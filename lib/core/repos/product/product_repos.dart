@@ -6,8 +6,18 @@ class ProductRepos {
 
   ProductRepos({required this.productService});
 
-  Future<List<ProductModel>> getProduct({
+  Future<List<ProductModel>> getProductsByCategory({
     required int page,
     required int pageSize,
-  }) => productService.getProduct(page: page, pageSize: pageSize);
+    required String categoryId,
+  }) => productService.getProductsByCategory(
+    categoryId: categoryId,
+    page: page,
+    pageSize: pageSize,
+  );
+
+  Future<List<ProductModel>> getProducts({
+    required int page,
+    required int pageSize,
+  }) => productService.getProducts(page: page, pageSize: pageSize);
 }

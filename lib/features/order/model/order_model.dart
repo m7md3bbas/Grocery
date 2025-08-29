@@ -1,35 +1,31 @@
 class OrderModel {
   final String id;
   final String userId;
-  final String status;
-  final double totalAmount;
+  final double totalPrice;
+  final String status; // pending / confirmed / shipped / delivered / cancelled
+  final String paymentStatus; // unpaid / paid / failed / refunded
   final DateTime createdAt;
+  final DateTime updatedAt;
 
   OrderModel({
     required this.id,
     required this.userId,
+    required this.totalPrice,
     required this.status,
-    required this.totalAmount,
+    required this.paymentStatus,
     required this.createdAt,
+    required this.updatedAt,
   });
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
     return OrderModel(
       id: json['id'],
       userId: json['user_id'],
+      totalPrice: (json['total_price'] as num).toDouble(),
       status: json['status'],
-      totalAmount: double.parse(json['total_amount'].toString()),
+      paymentStatus: json['payment_status'],
       createdAt: DateTime.parse(json['created_at']),
+      updatedAt: DateTime.parse(json['updated_at']),
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      "id": id,
-      "user_id": userId,
-      "status": status,
-      "total_amount": totalAmount,
-      "created_at": createdAt.toIso8601String(),
-    };
   }
 }

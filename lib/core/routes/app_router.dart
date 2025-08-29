@@ -3,6 +3,7 @@ import 'package:groceryapp/features/auth/view/auth_register.dart';
 import 'package:groceryapp/features/auth/view/auth_welcome.dart';
 import 'package:groceryapp/features/auth/view/wrapper_auth.dart';
 import 'package:groceryapp/features/home/view/home_view.dart';
+import 'package:groceryapp/features/home/view/product_details.dart';
 import 'package:groceryapp/features/onboarding/views/onboarding_view.dart';
 import 'package:groceryapp/features/profile/view/profile_view.dart';
 import 'package:go_router/go_router.dart';
@@ -20,12 +21,17 @@ class AppRouteName {
   static const search = '/search';
   static const favorite = '/favorite';
   static const aboutMe = '/aboutMe';
+  static const productDetails = '/productDetails';
 }
 
 class AppRouter {
   static final GoRouter router = GoRouter(
     initialLocation: AppRouteName.initial,
     routes: [
+      GoRoute(
+        path: AppRouteName.productDetails,
+        builder: (context, state) => ProductDetailScreen(),
+      ),
       GoRoute(
         path: AppRouteName.aboutMe,
         builder: (context, state) => const AboutMeScreen(),

@@ -4,6 +4,7 @@ class OrderItemModel {
   final String productId;
   final int quantity;
   final double price;
+  final DateTime createdAt;
 
   OrderItemModel({
     required this.id,
@@ -11,6 +12,7 @@ class OrderItemModel {
     required this.productId,
     required this.quantity,
     required this.price,
+    required this.createdAt,
   });
 
   factory OrderItemModel.fromJson(Map<String, dynamic> json) {
@@ -19,17 +21,8 @@ class OrderItemModel {
       orderId: json['order_id'],
       productId: json['product_id'],
       quantity: json['quantity'],
-      price: double.parse(json['price'].toString()),
+      price: (json['price'] as num).toDouble(),
+      createdAt: DateTime.parse(json['created_at']),
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      "id": id,
-      "order_id": orderId,
-      "product_id": productId,
-      "quantity": quantity,
-      "price": price,
-    };
   }
 }

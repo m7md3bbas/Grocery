@@ -106,7 +106,7 @@ class _ProfileViewState extends State<ProfileView> {
                                                       .user!
                                                       .image
                                                       .isNotEmpty
-                                              ? NetworkImage(
+                                              ? CachedNetworkImageProvider(
                                                   viewModel.user!.image,
                                                 )
                                               : null,
@@ -126,29 +126,12 @@ class _ProfileViewState extends State<ProfileView> {
                                   onTap: () async {
                                     final picked = await viewModel.pickImage();
                                     if (picked) {
-                                      final result = await viewModel
-                                          .uploadProfileImg(
-                                            userId: context
-                                                .read<AuthViewModel>()
-                                                .getCurrentUser()!
-                                                .id,
-                                          );
-                                      if (result) {
-                                        viewModel.getProfile(
-                                          userId: context
-                                              .read<AuthViewModel>()
-                                              .getCurrentUser()!
-                                              .id,
-                                        );
-                                        ShowToast.showSuccess(
-                                          "Image uploaded successfully",
-                                        );
-                                      } else {
-                                        print(viewModel.error);
-                                        ShowToast.showError(
-                                          "Failed to upload image",
-                                        );
-                                      }
+                                      await viewModel.uploadProfileImg(
+                                        userId: context
+                                            .read<AuthViewModel>()
+                                            .getCurrentUser()!
+                                            .id,
+                                      );
                                     }
                                   },
 

@@ -8,12 +8,29 @@ class OrderService {
 
   String orders = "orders";
   String orderItem = "order_items";
+  String payments = "payments";
   OrderService({required this.dioClient});
 
-  /// Create new order
+  /// ✅ Checkout cart → calls Supabase RPC function
+  Future<String> checkoutCart(
+    String userId, {
+    String method = "cash_on_delivery",
+  }) async {
+    try {
+      final response = await dioClient.post(
+        url: "/rpc/checkout_cart",
+        data: {"p_user_id": userId, "p_method": method},
+      );
+      return response.data; // بيرجع order_id
+    } catch (e) {
+      throw Failure("Failed to checkout cart: $e");
+    }
+  }
+
+  /// Create order manually (لو مش هتستخدم checkout_cart)
   Future<OrderModel> createOrder({
     required String userId,
-    required double totalAmount,
+    required double totalPrice,
     String status = "pending",
   }) async {
     try {
@@ -21,7 +38,7 @@ class OrderService {
         url: orders,
         data: {
           "user_id": userId,
-          "total_amount": totalAmount,
+          "total_price": totalPrice, // ✅ الاسم الصحيح
           "status": status,
         },
       );
@@ -61,7 +78,7 @@ class OrderService {
     try {
       final response = await dioClient.get(
         url: orders,
-        queryParameters: {"user_id": "eq.$userId"},
+        queryParameters: {"user_id": "eq.$userId", "order": "created_at.desc"},
       );
 
       return (response.data as List)
@@ -85,7 +102,7 @@ class OrderService {
 
       // Get items
       final itemsResponse = await dioClient.get(
-        url: "/order_items",
+        url: orderItem,
         queryParameters: {"order_id": "eq.$orderId"},
       );
 
@@ -105,7 +122,10 @@ class OrderService {
       await dioClient.patch(
         url: orders,
         queryParameters: {"id": "eq.$orderId"},
-        data: {"status": status},
+        data: {
+          "status": status,
+          "updated_at": DateTime.now().toIso8601String(),
+        },
       );
     } catch (e) {
       throw Failure("Failed to update order status: $e");

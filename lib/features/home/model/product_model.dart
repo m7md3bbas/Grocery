@@ -11,6 +11,7 @@ class ProductModel extends Equatable {
   final int discount;
   final String status;
   final double weight;
+  final String unit;
   final bool isNew;
   final DateTime createdAt;
 
@@ -25,6 +26,7 @@ class ProductModel extends Equatable {
     this.discount = 0,
     required this.status,
     this.weight = 0,
+    this.unit = '',
     this.isNew = false,
     required this.createdAt,
   });
@@ -40,6 +42,7 @@ class ProductModel extends Equatable {
     int? discount,
     String? status,
     double? weight,
+    String? unit,
     bool? isNew,
     DateTime? createdAt,
   }) {
@@ -54,6 +57,7 @@ class ProductModel extends Equatable {
       discount: discount ?? this.discount,
       status: status ?? this.status,
       weight: weight ?? this.weight,
+      unit: unit ?? this.unit,
       isNew: isNew ?? this.isNew,
       createdAt: createdAt ?? this.createdAt,
     );
@@ -71,6 +75,7 @@ class ProductModel extends Equatable {
       discount: json['discount'] ?? 0,
       status: json['status'] as String,
       weight: (json['weight'] ?? 0).toDouble(),
+      unit: json['unit'] ?? '',
       isNew: json['is_new'] ?? false,
       createdAt: DateTime.parse(json['created_at']),
     );
@@ -87,6 +92,7 @@ class ProductModel extends Equatable {
       'discount': discount,
       'status': status,
       'weight': weight,
+      'unit': unit,
       'is_new': isNew,
     };
   }
@@ -103,6 +109,7 @@ class ProductModel extends Equatable {
     discount,
     status,
     weight,
+    unit,
     isNew,
     createdAt,
   ];

@@ -16,7 +16,6 @@ class CategoryService {
       final data = (response.data as List)
           .map((e) => CategoryModel.fromJson(e))
           .toList();
-      print(data);
       return data;
     } catch (e) {
       throw Failure(e.toString());

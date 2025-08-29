@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:groceryapp/core/utils/constants/styles/app_color_styles.dart';
 import 'package:groceryapp/core/widgets/toast/flutter_toast.dart';
@@ -73,7 +74,12 @@ class CartView extends StatelessWidget {
       ),
       direction: DismissDirection.endToStart,
       child: ListTile(
-        leading: Image.network(item.product!.image!, width: 50, height: 50),
+        leading: CachedNetworkImage(
+          imageUrl:
+              "https://scontent.fcai21-3.fna.fbcdn.net/v/t39.30808-6/532405691_794686036419253_5715095751347851658_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=rWs8dp3mVusQ7kNvwFw61sk&_nc_oc=AdlOY3sHa5bH7s7Am8o91krzIRefyN-evu61rGHXEXrT80yoUO9YdWnOiK9Ln8XteJ4&_nc_zt=23&_nc_ht=scontent.fcai21-3.fna&_nc_gid=O7_sRwUxTcr9VIJQEZb67g&oh=00_AfUPptZfZ2nuCt_7LwXPHBxHmUUsevNQm7MQwQ_7ig9ljA&oe=68B7E7EA",
+          width: 50,
+          height: 50,
+        ),
         title: Text(
           item.product!.title,
           style: const TextStyle(fontWeight: FontWeight.bold),
@@ -167,9 +173,7 @@ class CartView extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           ElevatedButton(
-            onPressed: () {
-              // TODO: checkout
-            },
+            onPressed: () {},
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.green,
               minimumSize: const Size(double.infinity, 50),
